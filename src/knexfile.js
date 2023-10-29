@@ -5,7 +5,7 @@ module.exports = {
       filename: './dev.sqlite3'
     },
     migrations: {
-      directory: './src/migrations'
+      directory: './migrations'
     },
     useNullAsDefault: true
   },
@@ -23,7 +23,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './src/migrations'
+      directory: './migrations'
     }
   },
 
@@ -40,7 +40,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './src/migrations'
+      directory: './migrations'
     }
   }
 }
