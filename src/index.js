@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser')
 const endpointsRouter = require('./routes/endpoints')
 const auth = require('./routes/auth')
 
+require('dotenv').config()
+
 const app = express()
 
 // Middleware
