@@ -3,6 +3,7 @@ const express = require('express')
 const knex = require('../knexsetup')
 const authenticate = require('../middleware/authenticate')
 const { body, param } = require('express-validator')
+const validationErrorHandler = require('../middleware/validation_error_handler')
 
 const router = express.Router()
 
@@ -31,6 +32,7 @@ router.post(
       .isString()
       .withMessage('Token must be a string.')
   ],
+  validationErrorHandler,
   async (req, res) => {
     // Extract information from the request.
     const { endpoint, method, format, presentation, token } = req.body
@@ -82,6 +84,7 @@ router.put(
     // Validate the 'id' param
     param('id').isInt().withMessage('Endpoint ID must be an integer')
   ],
+  validationErrorHandler,
   async (req, res) => {
     // Extract information from the request.
     const { endpoint, method, format, presentation, token } = req.body
@@ -108,13 +111,15 @@ router.put(
 )
 
 // DELETE operation
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',
+  validationErrorHandler,
+  async (req, res) => {
   // Delete the configuration from the database.
-  await knex('endpoints')
-    .where({ id: req.params.id, user_id: req.user.id })
-    .del()
+    await knex('endpoints')
+      .where({ id: req.params.id, user_id: req.user.id })
+      .del()
 
-  res.status(200).json({ message: 'Configuration deleted' })
-})
+    res.status(200).json({ message: 'Configuration deleted' })
+  })
 
 module.exports = router
