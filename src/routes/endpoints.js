@@ -23,11 +23,17 @@ router.post(
       .not()
       .isEmpty()
       .trim()
-      .withMessage('Presentation is required')
+      .withMessage('Presentation is required'),
+    body('token')
+      .not()
+      .isEmpty()
+      .withMessage('Token is required.')
+      .isString()
+      .withMessage('Token must be a string.')
   ],
   async (req, res) => {
     // Extract information from the request.
-    const { endpoint, method, format, presentation } = req.body
+    const { endpoint, method, format, presentation, token } = req.body
 
     // Validate the required information here (omitted for brevity)
 
@@ -37,6 +43,7 @@ router.post(
       method,
       format,
       presentation,
+      token,
       user_id: req.user.id // The authenticated user's ID.
     }
 
@@ -66,12 +73,18 @@ router.put(
       .isEmpty()
       .trim()
       .withMessage('Presentation is required'),
+    body('token')
+      .not()
+      .isEmpty()
+      .withMessage('Token is required.')
+      .isString()
+      .withMessage('Token must be a string.'),
     // Validate the 'id' param
     param('id').isInt().withMessage('Endpoint ID must be an integer')
   ],
   async (req, res) => {
     // Extract information from the request.
-    const { endpoint, method, format, presentation } = req.body
+    const { endpoint, method, format, presentation, token } = req.body
 
     // Validate the required information here (omitted for brevity)
 
@@ -80,7 +93,8 @@ router.put(
       endpoint,
       method,
       format,
-      presentation
+      presentation,
+      token
       // No need to update user_id as it remains the same.
     }
 
