@@ -9,5 +9,6 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest'
   },
+  plugins: ['unused-imports'],
   rules: {}
 }
